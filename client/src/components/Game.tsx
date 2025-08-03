@@ -21,16 +21,21 @@ const Game = () => {
     hintsRemaining
   } = useGameLogic();
 
-  const { playHit, playSuccess } = useAudio();
+  const { playHit, playSuccess, setHitSound, setSuccessSound } = useAudio();
 
   // Initialize audio elements
   useEffect(() => {
     const hitAudio = new Audio('/sounds/hit.mp3');
     const successAudio = new Audio('/sounds/success.mp3');
     
-    // Set up audio in the store (if needed)
-    // playHit and playSuccess should work with the existing audio store
-  }, []);
+    // Preload audio files
+    hitAudio.preload = 'auto';
+    successAudio.preload = 'auto';
+    
+    // Set up audio in the store
+    setHitSound(hitAudio);
+    setSuccessSound(successAudio);
+  }, [setHitSound, setSuccessSound]);
 
   return (
     <div className="game-container">

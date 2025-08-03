@@ -24,25 +24,13 @@ const VictoryScreen: React.FC<VictoryScreenProps> = ({
         </div>
 
         <div className="victory-logo">
-          <svg width="80" height="80" viewBox="0 0 100 100">
-            <defs>
-              <linearGradient id="victoryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{stopColor:"#87CEEB"}} />
-                <stop offset="50%" style={{stopColor:"#6495ED"}} />
-                <stop offset="100%" style={{stopColor:"#4169E1"}} />
-              </linearGradient>
-            </defs>
-            <polygon 
-              points="50,10 90,50 50,90 10,50" 
-              fill="url(#victoryGradient)" 
-              stroke="#000" 
-              strokeWidth="2"
-            />
-            <rect x="35" y="35" width="6" height="8" fill="#000" />
-            <rect x="59" y="35" width="6" height="8" fill="#000" />
-            <path d="M 30 60 Q 50 75 70 60" stroke="#000" strokeWidth="3" fill="none" />
-            <line x1="50" y1="20" x2="50" y2="80" stroke="#000" strokeWidth="3" />
-          </svg>
+          <img 
+            src="/images/ethos-logo.svg" 
+            alt="ETH OS Victory Logo" 
+            width="80" 
+            height="80"
+            style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))' }}
+          />
         </div>
 
         <div className="victory-stats">
