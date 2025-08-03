@@ -3,7 +3,6 @@ import GameBoard from "./GameBoard";
 import ControlPanel from "./ControlPanel";
 import VictoryScreen from "./VictoryScreen";
 import { useGameLogic } from "../hooks/useGameLogic";
-import { useAudio } from "../lib/stores/useAudio";
 
 const Game = () => {
   const {
@@ -14,6 +13,7 @@ const Game = () => {
     tiles,
     flippedTiles,
     isGameWon,
+    gridDimensions,
     handleTileClick,
     resetGame,
     nextLevel,
@@ -21,21 +21,7 @@ const Game = () => {
     hintsRemaining
   } = useGameLogic();
 
-  const { playHit, playSuccess, setHitSound, setSuccessSound } = useAudio();
 
-  // Initialize audio elements
-  useEffect(() => {
-    const hitAudio = new Audio('/sounds/hit.mp3');
-    const successAudio = new Audio('/sounds/success.mp3');
-    
-    // Preload audio files
-    hitAudio.preload = 'auto';
-    successAudio.preload = 'auto';
-    
-    // Set up audio in the store
-    setHitSound(hitAudio);
-    setSuccessSound(successAudio);
-  }, [setHitSound, setSuccessSound]);
 
   return (
     <div className="game-container">
@@ -55,7 +41,8 @@ const Game = () => {
             tiles={tiles}
             flippedTiles={flippedTiles}
             onTileClick={handleTileClick}
-            gridSize={currentLevel === 1 ? 6 : currentLevel === 2 ? 7 : 8}
+            gridRows={gridDimensions.rows}
+            gridCols={gridDimensions.cols}
           />
           <ControlPanel
             onReset={resetGame}

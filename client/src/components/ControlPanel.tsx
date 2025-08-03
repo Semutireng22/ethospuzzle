@@ -1,5 +1,4 @@
 import React from "react";
-import { useAudio } from "../lib/stores/useAudio";
 
 interface ControlPanelProps {
   onReset: () => void;
@@ -14,8 +13,6 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   onFinish,
   hintsRemaining
 }) => {
-  const { isMuted, toggleMute } = useAudio();
-
   return (
     <div className="control-panel">
       <button className="retro-button" onClick={onReset}>
@@ -30,9 +27,6 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
       </button>
       <button className="retro-button" onClick={onFinish}>
         FINISH
-      </button>
-      <button className="retro-button" onClick={toggleMute}>
-        {isMuted ? "🔇 SOUND OFF" : "🔊 SOUND ON"}
       </button>
     </div>
   );

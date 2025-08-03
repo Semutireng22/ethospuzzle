@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { useAudio } from "../lib/stores/useAudio";
 
 export interface TileData {
   id: number;
@@ -13,12 +12,11 @@ export const useGameLogic = () => {
   const [matches, setMatches] = useState(0);
   const [tiles, setTiles] = useState<TileData[]>([]);
   const [flippedTiles, setFlippedTiles] = useState<number[]>([]);
-  const [hintsRemaining, setHintsRemaining] = useState(3);
+  const [hintsRemaining, setHintsRemaining] = useState(4);
   const [gameState, setGameState] = useState<'playing' | 'won' | 'paused'>('playing');
+  const [gridDimensions, setGridDimensions] = useState({ rows: 4, cols: 4 });
 
-  const { playHit, playSuccess } = useAudio();
-
-  const cryptoTypes = ['btc', 'eth', 'ethos', 'sol', 'bnb', 'ada'];
+  const cryptoTypes = ['btc', 'usdt', 'ada', 'bnb', 'sol', 'eth', 'ethos'];
 
   const shuffleArray = <T,>(array: T[]): T[] => {
     const shuffled = [...array];
@@ -30,8 +28,20 @@ export const useGameLogic = () => {
   };
 
   const initializeGame = useCallback(() => {
-    const gridSize = currentLevel === 1 ? 6 : currentLevel === 2 ? 7 : 8;
-    const totalTiles = gridSize * gridSize;
+    // Progressive difficulty: Level 1: 4x4 (8 pairs), Level 2: 4x6 (12 pairs), Level 3: 6x6 (18 pairs), Level 4+: 6x8 (24 pairs)
+    let gridRows, gridCols;
+    
+    if (currentLevel === 1) {
+      gridRows = 4; gridCols = 4; // Easy: 8 pairs
+    } else if (currentLevel === 2) {
+      gridRows = 4; gridCols = 6; // Medium: 12 pairs
+    } else if (currentLevel === 3) {
+      gridRows = 6; gridCols = 6; // Hard: 18 pairs
+    } else {
+      gridRows = 6; gridCols = 8; // Expert: 24 pairs
+    }
+    
+    const totalTiles = gridRows * gridCols;
     const pairsNeeded = totalTiles / 2;
     
     // Create pairs using available crypto types
@@ -53,7 +63,8 @@ export const useGameLogic = () => {
     setFlippedTiles([]);
     setMatches(0);
     setGameState('playing');
-    setHintsRemaining(3);
+    setHintsRemaining(Math.max(2, 5 - currentLevel)); // More hints for easier levels
+    setGridDimensions({ rows: gridRows, cols: gridCols });
   }, [currentLevel]);
 
   const handleTileClick = useCallback((index: number) => {
@@ -61,7 +72,6 @@ export const useGameLogic = () => {
       return;
     }
 
-    playHit();
     const newFlippedTiles = [...flippedTiles, index];
     setFlippedTiles(newFlippedTiles);
 
@@ -81,7 +91,6 @@ export const useGameLogic = () => {
           setMatches(prev => prev + 1);
           setScore(prev => prev + 100 * currentLevel);
           setFlippedTiles([]);
-          playSuccess();
         }, 500);
       } else {
         // No match
@@ -90,7 +99,7 @@ export const useGameLogic = () => {
         }, 1000);
       }
     }
-  }, [flippedTiles, tiles, currentLevel, playHit, playSuccess]);
+  }, [flippedTiles, tiles, currentLevel]);
 
   const resetGame = useCallback(() => {
     setCurrentLevel(1);
@@ -158,6 +167,7 @@ export const useGameLogic = () => {
     flippedTiles,
     isGameWon,
     hintsRemaining,
+    gridDimensions,
     handleTileClick,
     resetGame,
     nextLevel,

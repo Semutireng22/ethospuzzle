@@ -6,21 +6,23 @@ interface GameBoardProps {
   tiles: TileData[];
   flippedTiles: number[];
   onTileClick: (index: number) => void;
-  gridSize: number;
+  gridRows: number;
+  gridCols: number;
 }
 
 const GameBoard: React.FC<GameBoardProps> = ({
   tiles,
   flippedTiles,
   onTileClick,
-  gridSize
+  gridRows,
+  gridCols
 }) => {
   return (
     <div 
       className="game-board"
       style={{
-        gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-        gridTemplateRows: `repeat(${gridSize}, 1fr)`
+        gridTemplateColumns: `repeat(${gridCols}, 1fr)`,
+        gridTemplateRows: `repeat(${gridRows}, 1fr)`
       }}
     >
       {tiles.map((tile, index) => (

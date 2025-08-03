@@ -65,24 +65,28 @@
 
 .game-board {
   display: grid;
-  gap: 4px;
+  gap: 3px;
   background: linear-gradient(145deg, #808080, #707070);
   padding: 12px;
   border: 3px inset #C0C0C0;
   border-radius: 2px;
-  max-width: 500px;
-  max-height: 500px;
+  width: fit-content;
+  max-width: 90vw;
+  max-height: 60vh;
+  margin: 0 auto;
   box-shadow: 
     inset 2px 2px 4px rgba(0,0,0,0.4),
     inset -1px -1px 2px rgba(255,255,255,0.2);
 }
 
 .tile {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   perspective: 1000px;
   cursor: pointer;
   transition: all 0.2s ease;
+  min-width: 40px;
+  min-height: 40px;
 }
 
 .tile:hover:not(.matched) {
