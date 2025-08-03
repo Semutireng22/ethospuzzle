@@ -11,12 +11,12 @@ interface TileProps {
 const Tile: React.FC<TileProps> = ({ tile, isFlipped, onClick, disabled }) => {
   const getCryptoLogo = (type: string) => {
     const logoMap: { [key: string]: string } = {
-      btc: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
-      usdt: "https://cryptologos.cc/logos/tether-usdt-logo.png?v=040",
-      ada: "https://cryptologos.cc/logos/cardano-ada-logo.png?v=040",
-      bnb: "https://cryptologos.cc/logos/bnb-bnb-logo.png?v=040",
-      sol: "https://cryptologos.cc/logos/solana-sol-logo.png?v=040",
-      eth: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=040",
+      btc: "/images/crypto/btc.svg",
+      usdt: "/images/crypto/usdt.svg",
+      ada: "/images/crypto/ada.svg",
+      bnb: "/images/crypto/bnb.svg",
+      sol: "/images/crypto/sol.svg",
+      eth: "/images/crypto/eth.svg",
       ethos: "/images/ethos-logo.svg"
     };
     return logoMap[type] || "/images/ethos-logo.svg";
