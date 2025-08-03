@@ -9,28 +9,28 @@ interface TileProps {
 }
 
 const Tile: React.FC<TileProps> = ({ tile, isFlipped, onClick, disabled }) => {
-  const getCryptoIcon = (type: string) => {
-    const iconMap: { [key: string]: string } = {
-      btc: "₿",
-      eth: "Ξ",
-      ethos: "◊", // Will be replaced with actual logo
-      sol: "◎",
-      bnb: "⬢",
-      ada: "₳"
+  const getCryptoLogo = (type: string) => {
+    const logoMap: { [key: string]: string } = {
+      btc: "/images/crypto/btc-logo.svg",
+      eth: "/images/crypto/eth-logo.svg",
+      ethos: "/images/ethos-logo.svg",
+      sol: "/images/crypto/sol-logo.svg",
+      bnb: "/images/crypto/bnb-logo.svg",
+      ada: "/images/crypto/ada-logo.svg"
     };
-    return iconMap[type] || "?";
+    return logoMap[type] || "/images/ethos-logo.svg";
   };
 
-  const getCryptoColor = (type: string) => {
-    const colorMap: { [key: string]: string } = {
-      btc: "#f7931a",
-      eth: "#627eea",
-      ethos: "#8a2be2",
-      sol: "#9945ff",
-      bnb: "#f3ba2f",
-      ada: "#0033ad"
+  const getCryptoName = (type: string) => {
+    const nameMap: { [key: string]: string } = {
+      btc: "BITCOIN",
+      eth: "ETHEREUM", 
+      ethos: "ETH OS",
+      sol: "SOLANA",
+      bnb: "BINANCE",
+      ada: "CARDANO"
     };
-    return colorMap[type] || "#666";
+    return nameMap[type] || type.toUpperCase();
   };
 
   return (
@@ -41,27 +41,17 @@ const Tile: React.FC<TileProps> = ({ tile, isFlipped, onClick, disabled }) => {
     >
       <div className="tile-inner">
         <div className="tile-front"></div>
-        <div 
-          className="tile-back"
-          style={{ 
-            color: getCryptoColor(tile.type),
-            borderColor: getCryptoColor(tile.type)
-          }}
-        >
-          {tile.type === "ethos" ? (
-            <div className="ethos-logo">
-              <img 
-                src="/images/ethos-logo.svg" 
-                alt="ETH OS Logo" 
-                width="40" 
-                height="40"
-                style={{ filter: 'drop-shadow(1px 1px 2px rgba(0,0,0,0.3))' }}
-              />
-            </div>
-          ) : (
-            <span className="crypto-icon">{getCryptoIcon(tile.type)}</span>
-          )}
-          <span className="crypto-name">{tile.type.toUpperCase()}</span>
+        <div className="tile-back">
+          <div className="crypto-logo">
+            <img 
+              src={getCryptoLogo(tile.type)}
+              alt={`${getCryptoName(tile.type)} Logo`}
+              width="36" 
+              height="36"
+              style={{ filter: 'drop-shadow(1px 1px 2px rgba(0,0,0,0.2))' }}
+            />
+          </div>
+          <span className="crypto-name">{getCryptoName(tile.type)}</span>
         </div>
       </div>
     </div>

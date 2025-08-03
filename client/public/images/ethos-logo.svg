@@ -1,27 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
     <linearGradient id="ethosLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#87CEEB"/>
+      <stop offset="0%" style="stop-color:#a0c4ff"/>
       <stop offset="50%" style="stop-color:#6495ED"/>
       <stop offset="100%" style="stop-color:#4169E1"/>
     </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
   </defs>
   
   <!-- Diamond shape based on the attached image -->
   <polygon 
-    points="50,5 85,50 50,95 15,50" 
+    points="50,8 82,50 50,92 18,50" 
     fill="url(#ethosLogoGradient)" 
     stroke="#000" 
     stroke-width="2"
+    filter="url(#shadow)"
   />
   
-  <!-- Face elements - eyes -->
-  <rect x="35" y="30" width="8" height="12" rx="1" fill="#000" />
-  <rect x="57" y="30" width="8" height="12" rx="1" fill="#000" />
+  <!-- Face elements - eyes (more rectangular like the image) -->
+  <rect x="38" y="35" width="6" height="10" fill="#000" />
+  <rect x="56" y="35" width="6" height="10" fill="#000" />
   
-  <!-- Smile -->
-  <path d="M 30 65 Q 50 80 70 65" stroke="#000" stroke-width="4" fill="none" stroke-linecap="round" />
+  <!-- Smile (more curved like the image) -->
+  <path d="M 35 65 Q 50 76 65 65" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round" />
   
-  <!-- Central vertical line -->
-  <line x1="50" y1="15" x2="50" y2="85" stroke="#000" stroke-width="4" stroke-linecap="round" />
+  <!-- Central vertical line (thicker and more prominent) -->
+  <line x1="50" y1="18" x2="50" y2="82" stroke="#000" stroke-width="3" stroke-linecap="round" />
 </svg>

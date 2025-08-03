@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="adaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0033ad"/>
+      <stop offset="100%" style="stop-color:#1e90ff"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer circle -->
+  <circle cx="50" cy="50" r="48" fill="url(#adaGradient)" stroke="#002a8f" stroke-width="2" filter="url(#shadow)"/>
+  
+  <!-- Cardano symbol -->
+  <g transform="translate(50,50)">
+    <!-- Main circle -->
+    <circle cx="0" cy="0" r="16" fill="none" stroke="white" stroke-width="2"/>
+    
+    <!-- Small circles around -->
+    <circle cx="0" cy="-20" r="3" fill="white"/>
+    <circle cx="17" cy="-10" r="3" fill="white"/>
+    <circle cx="17" cy="10" r="3" fill="white"/>
+    <circle cx="0" cy="20" r="3" fill="white"/>
+    <circle cx="-17" cy="10" r="3" fill="white"/>
+    <circle cx="-17" cy="-10" r="3" fill="white"/>
+    
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="4" fill="white"/>
+  </g>
+</svg>

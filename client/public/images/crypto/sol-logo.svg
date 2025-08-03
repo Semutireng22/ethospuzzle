@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="solGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9945ff"/>
+      <stop offset="100%" style="stop-color:#14f195"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer circle -->
+  <circle cx="50" cy="50" r="48" fill="url(#solGradient)" stroke="#7c3aed" stroke-width="2" filter="url(#shadow)"/>
+  
+  <!-- Solana symbol -->
+  <g transform="translate(50,50)">
+    <!-- Top curved line -->
+    <path d="M-15,-10 L12,-10 L15,-7 L-12,-7 Z" fill="white" fill-opacity="0.9"/>
+    <!-- Middle straight line -->
+    <path d="M-15,0 L15,0" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <!-- Bottom curved line -->
+    <path d="M-15,10 L12,10 L15,7 L-12,7 Z" fill="white" fill-opacity="0.9"/>
+  </g>
+</svg>
