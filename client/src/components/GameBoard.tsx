@@ -1,3 +1,6 @@
+// ===================================================================
+// client/src/components/GameBoard.tsx (UPDATED)
+// ===================================================================
 import React from "react";
 import Tile from "./Tile";
 import { TileData } from "../hooks/useGameLogic";
@@ -6,25 +9,20 @@ interface GameBoardProps {
   tiles: TileData[];
   flippedTiles: number[];
   onTileClick: (index: number) => void;
-  gridRows: number;
-  gridCols: number;
+  // Kita tidak lagi memerlukan gridRows dan gridCols di sini
+  // karena CSS akan menanganinya secara otomatis.
 }
 
+// Hapus gridRows dan gridCols dari props
 const GameBoard: React.FC<GameBoardProps> = ({
   tiles,
   flippedTiles,
   onTileClick,
-  gridRows,
-  gridCols
 }) => {
   return (
-    <div 
-      className="game-board"
-      style={{
-        gridTemplateColumns: `repeat(${gridCols}, 1fr)`,
-        gridTemplateRows: `repeat(${gridRows}, 1fr)`
-      }}
-    >
+    // HAPUS inline style dari div ini.
+    // Biarkan kelas "game-board" dari retro.css yang mengatur layout grid.
+    <div className="game-board">
       {tiles.map((tile, index) => (
         <Tile
           key={index}
