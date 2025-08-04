@@ -10,10 +10,10 @@
 .app-container {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #008080 0%, #5F9EA0 50%, #4682B4 100%);
+  background: linear-gradient(135deg, #008080 0%, #5f9ea0 50%, #4682b4 100%);
   font-family: 'MS Sans Serif', 'Courier New', monospace, sans-serif;
   font-size: 11px;
-  overflow: hidden;
+  overflow: hidden; /* Overflow di sini boleh, karena kita ingin container utama tidak scroll */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,33 +21,34 @@
 }
 
 .game-container {
-  width: calc(100vw - 16px);
-  max-width: 700px;
-  height: calc(100vh - 16px);
-  background: linear-gradient(135deg, #C0C0C0 0%, #DFDFDF 25%, #C0C0C0 50%, #A8A8A8 75%, #808080 100%);
-  border: 4px outset #C0C0C0;
-  border-radius: 0;
+  /* Menggunakan persentase agar lebih fleksibel */
+  width: 100%; 
+  height: 100%;
+  max-width: 700px; /* Lebar maksimal di layar besar */
+  max-height: 900px; /* Tinggi maksimal agar tidak terlalu panjang di layar tinggi */
+  background: linear-gradient(135deg, #c0c0c0 0%, #dfdfdf 25%, #c0c0c0 50%, #a8a8a8 75%, #808080 100%);
+  border: 4px outset #c0c0c0;
   padding: 4px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  box-shadow: 
-    4px 4px 8px rgba(0,0,0,0.4),
-    inset 2px 2px 0px rgba(255,255,255,0.9),
-    inset -2px -2px 0px rgba(128,128,128,0.9);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4),
+    inset 2px 2px 0px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 0px rgba(128, 128, 128, 0.9);
 }
 
 /* Title Bar */
 .game-header {
-  background: linear-gradient(180deg, #1084D0 0%, #0F5F9D 100%);
+  background: linear-gradient(180deg, #1084d0 0%, #0f5f9d 100%);
   color: white;
   padding: 6px 12px;
   margin: 0;
-  border: 2px outset #C0C0C0;
+  border: 2px outset #c0c0c0;
   font-weight: bold;
   font-size: 11px;
-  text-shadow: 1px 1px 0px rgba(0,0,0,0.7);
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.7);
   text-align: center;
+  flex-shrink: 0; /* Mencegah header menyusut */
 }
 
 .game-title {
@@ -61,34 +62,36 @@
 /* Main Content Panel */
 .game-content {
   flex: 1;
-  background: linear-gradient(135deg, #C0C0C0 0%, #DFDFDF 25%, #C0C0C0 50%, #A8A8A8 75%, #808080 100%);
-  border: 2px inset #C0C0C0;
+  background: linear-gradient(135deg, #c0c0c0 0%, #dfdfdf 25%, #c0c0c0 50%, #a8a8a8 75%, #808080 100%);
+  border: 2px inset #c0c0c0;
   padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  overflow: auto;
+  overflow: auto; /* Izinkan scroll jika kontennya lebih besar dari area */
+  min-height: 0; /* Perbaikan untuk flexbox di beberapa browser */
 }
 
 /* Stats Panel */
 .game-stats {
-  background: linear-gradient(135deg, #DFDFDF, #C0C0C0);
-  border: 2px inset #C0C0C0;
+  background: linear-gradient(135deg, #dfdfdf, #c0c0c0);
+  border: 2px inset #c0c0c0;
   padding: 8px;
   display: flex;
   justify-content: space-around;
   gap: 8px;
   flex-wrap: wrap;
   margin-bottom: 8px;
+  flex-shrink: 0; /* Mencegah stats menyusut */
 }
 
 .stat {
   color: #000000;
   font-size: 11px;
   font-weight: bold;
-  background: linear-gradient(135deg, #EFEFEF, #DFDFDF);
+  background: linear-gradient(135deg, #efefef, #dfdfdf);
   padding: 4px 8px;
-  border: 1px inset #C0C0C0;
+  border: 1px inset #c0c0c0;
   text-align: center;
   white-space: nowrap;
 }
@@ -99,32 +102,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #DFDFDF, #C0C0C0);
-  border: 2px inset #C0C0C0;
+  background: linear-gradient(135deg, #dfdfdf, #c0c0c0);
+  border: 2px inset #c0c0c0;
   padding: 12px;
   margin: 0;
+  overflow: hidden; /* Mencegah papan itu sendiri yang scroll */
+  min-height: 0; /* Perbaikan untuk flexbox di beberapa browser */
 }
+
+/* ======================================================= */
+/* PERUBAHAN UTAMA UNTUK RESPONSIVITAS ADA DI BAWAH INI     */
+/* ======================================================= */
 
 .game-board {
   display: grid;
-  gap: 2px;
+  /* Membuat kolom yang lebarnya sama dan akan mengisi ruang yang tersedia */
+  /* auto-fit akan secara otomatis menentukan berapa banyak kolom yang muat */
+  /* minmax() memastikan kolom tidak lebih kecil dari 40px dan tidak lebih besar dari 1fr (fraksi) */
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+  gap: 4px; /* Sedikit mengurangi gap agar lebih pas di layar kecil */
   background: linear-gradient(135deg, #808080, #707070);
   padding: 8px;
-  border: 2px inset #C0C0C0;
-  border-radius: 0;
-  width: fit-content;
-  box-shadow: 
-    inset 2px 2px 2px rgba(0,0,0,0.5),
-    inset -1px -1px 1px rgba(255,255,255,0.3);
+  border: 2px inset #c0c0c0;
+  width: 100%; /* Lebar papan game sekarang 100% dari container-nya */
+  max-width: 100%;
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.5),
+    inset -1px -1px 1px rgba(255, 255, 255, 0.3);
 }
 
 /* Tiles */
 .tile {
-  width: 52px;
-  height: 52px;
+  /* MENGHAPUS 'width' DAN 'height' YANG KAKU */
+  /* 'aspect-ratio: 1 / 1' membuat tile selalu persegi (tinggi = lebar) */
+  aspect-ratio: 1 / 1;
   perspective: 1000px;
   cursor: pointer;
   transition: all 0.15s ease;
+  min-width: 35px; /* Lebar minimum agar tidak terlalu kecil */
 }
 
 .tile:hover:not(.matched):not(.flipped) {
@@ -136,7 +150,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
 }
 
@@ -150,46 +164,46 @@
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  border: 2px outset #C0C0C0;
+  border: 2px outset #c0c0c0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 4px; /* Menambahkan padding agar konten tidak mepet */
 }
 
 .tile-front {
-  background: linear-gradient(145deg, #DFDFDF, #BFBFBF);
-  box-shadow: inset 1px 1px 2px rgba(255,255,255,0.8), inset -1px -1px 2px rgba(0,0,0,0.2);
+  background: linear-gradient(145deg, #dfdfdf, #bfbfbf);
+  box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.8), inset -1px -1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .tile-back {
-  background: linear-gradient(145deg, #FFFFFF, #F8F8F8);
+  background: linear-gradient(145deg, #ffffff, #f8f8f8);
   transform: rotateY(180deg);
-  border: 2px inset #C0C0C0;
-  box-shadow: inset 1px 1px 2px rgba(255,255,255,0.8), inset -1px -1px 2px rgba(0,0,0,0.1);
+  border: 2px inset #c0c0c0;
+  box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.8), inset -1px -1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .tile.matched .tile-back {
-  background: linear-gradient(145deg, #90EE90, #7FDD7F);
-  border: 2px solid #32CD32;
-  box-shadow: 
-    inset 1px 1px 3px rgba(255,255,255,0.9), 
-    inset -1px -1px 3px rgba(0,100,0,0.3),
-    0 0 10px rgba(50,205,50,0.5);
+  background: linear-gradient(145deg, #90ee90, #7fdd7f);
+  border: 2px solid #32cd32;
+  box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.9),
+    inset -1px -1px 3px rgba(0, 100, 0, 0.3),
+    0 0 10px rgba(50, 205, 50, 0.5);
   animation: matchPulse 0.6s ease-in-out;
 }
 
 @keyframes matchPulse {
-  0% { 
-    transform: rotateY(180deg) scale(1); 
+  0% {
+    transform: rotateY(180deg) scale(1);
     filter: brightness(1);
   }
-  50% { 
-    transform: rotateY(180deg) scale(1.05); 
+  50% {
+    transform: rotateY(180deg) scale(1.05);
     filter: brightness(1.2);
   }
-  100% { 
-    transform: rotateY(180deg) scale(1); 
+  100% {
+    transform: rotateY(180deg) scale(1);
     filter: brightness(1.1);
   }
 }
@@ -199,10 +213,17 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 4px;
+  flex: 1; /* Biarkan logo mengisi ruang vertikal */
+  width: 100%;
 }
 
 .crypto-logo img {
+  /* Membuat logo fleksibel di dalam tile */
+  width: 60%;
+  height: 60%;
+  object-fit: contain; /* Pastikan gambar tidak terdistorsi */
   transition: transform 0.2s ease;
+  filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
 }
 
 .tile:hover:not(.matched) .crypto-logo img {
@@ -210,28 +231,31 @@
 }
 
 .crypto-name {
-  font-size: 7px;
+  /* Menggunakan satuan 'vw' (viewport width) agar font ikut mengecil */
+  /* clamp() memastikan ukuran font tidak terlalu kecil atau terlalu besar */
+  font-size: clamp(6px, 1.5vw, 9px);
   font-weight: bold;
   color: #000000;
-  text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
   letter-spacing: 0.5px;
   line-height: 1;
 }
 
 /* Control Panel */
 .control-panel {
-  background: linear-gradient(135deg, #DFDFDF, #C0C0C0);
-  border: 2px inset #C0C0C0;
+  background: linear-gradient(135deg, #dfdfdf, #c0c0c0);
+  border: 2px inset #c0c0c0;
   padding: 8px;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   justify-content: center;
+  flex-shrink: 0; /* Mencegah control panel menyusut */
 }
 
 .retro-button {
-  background: linear-gradient(145deg, #DFDFDF, #BFBFBF);
-  border: 2px outset #C0C0C0;
+  background: linear-gradient(145deg, #dfdfdf, #bfbfbf);
+  border: 2px outset #c0c0c0;
   color: #000000;
   font-family: inherit;
   font-size: 11px;
@@ -242,20 +266,20 @@
   letter-spacing: 0.5px;
   min-width: 70px;
   transition: all 0.1s ease;
-  box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .retro-button:hover:not(:disabled) {
-  background: linear-gradient(145deg, #E8E8E8, #C8C8C8);
+  background: linear-gradient(145deg, #e8e8e8, #c8c8c8);
   transform: translateY(-1px);
-  box-shadow: 2px 2px 3px rgba(0,0,0,0.25);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.25);
 }
 
 .retro-button:active:not(:disabled) {
-  border: 2px inset #C0C0C0;
-  background: linear-gradient(145deg, #B8B8B8, #D8D8D8);
+  border: 2px inset #c0c0c0;
+  background: linear-gradient(145deg, #b8b8b8, #d8d8d8);
   transform: translateY(0);
-  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.3);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .retro-button:disabled {
@@ -263,6 +287,7 @@
   cursor: not-allowed;
 }
 
+/* Victory Screen */
 .victory-screen {
   position: absolute;
   top: 0;
@@ -273,20 +298,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px inset #C0C0C0;
+  border: 3px inset #c0c0c0;
   backdrop-filter: blur(2px);
+  z-index: 100;
 }
 
 .victory-content {
-  background: linear-gradient(145deg, #C8C8C8, #B8B8B8);
-  border: 3px outset #C0C0C0;
+  background: linear-gradient(145deg, #c8c8c8, #b8b8b8);
+  border: 3px outset #c0c0c0;
   border-radius: 4px;
   padding: 30px;
   text-align: center;
+  width: 90%;
   max-width: 400px;
-  box-shadow: 
-    4px 4px 12px rgba(0,0,0,0.4),
-    inset 1px 1px 2px rgba(255,255,255,0.8);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .victory-title {
@@ -294,7 +320,7 @@
   font-size: 24px;
   font-weight: bold;
   margin: 0 0 20px 0;
-  text-shadow: 1px 1px 0px #FFFFFF;
+  text-shadow: 1px 1px 0px #ffffff;
 }
 
 .blinking-text {
@@ -309,23 +335,35 @@
 }
 
 .blink-1 {
-  color: #FF0000;
+  color: #ff0000;
   animation: blink1 1s infinite;
 }
 
 .blink-2 {
-  color: #0000FF;
+  color: #0000ff;
   animation: blink2 1s infinite 0.5s;
 }
 
 @keyframes blink1 {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes blink2 {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .victory-logo {
@@ -334,8 +372,12 @@
 }
 
 @keyframes logoSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .victory-stats {
@@ -346,9 +388,9 @@
 
 .victory-stats p {
   margin: 5px 0;
-  background: #DFDFDF;
+  background: #dfdfdf;
   padding: 5px;
-  border: 1px inset #C0C0C0;
+  border: 1px inset #c0c0c0;
 }
 
 .victory-buttons {
@@ -358,31 +400,15 @@
   flex-wrap: wrap;
 }
 
-/* Responsive design */
+/* ======================================================= */
+/* MEDIA QUERIES SEKARANG LEBIH SEDERHANA                  */
+/* ======================================================= */
+
+/* Hanya perlu menyesuaikan font dan padding, bukan ukuran tile lagi */
 @media (max-width: 768px) {
-  .game-container {
-    width: 95vw;
-    height: 95vh;
-    padding: 10px;
-  }
-  
   .game-title {
     font-size: 18px;
   }
-  
-  .tile {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .crypto-icon {
-    font-size: 16px;
-  }
-  
-  .crypto-name {
-    font-size: 6px;
-  }
-  
   .victory-content {
     padding: 20px;
     margin: 20px;
@@ -390,21 +416,12 @@
 }
 
 @media (max-width: 480px) {
-  .tile {
-    width: 35px;
-    height: 35px;
-  }
-  
-  .crypto-icon {
-    font-size: 14px;
-  }
-  
   .game-stats {
     gap: 10px;
   }
-  
   .stat {
     font-size: 12px;
     padding: 3px 6px;
   }
 }
+
